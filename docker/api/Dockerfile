@@ -1,6 +1,6 @@
 FROM ruby:2.6.3
 
-ENV RAILS_ROOT /var/www/xop-landing-page
+ENV RAILS_ROOT /var/www/your-bundle
 RUN mkdir -p $RAILS_ROOT
 
 WORKDIR $RAILS_ROOT

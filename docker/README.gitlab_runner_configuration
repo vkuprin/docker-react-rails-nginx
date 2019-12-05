@@ -1,0 +1,29 @@
+File Location: /etc/gitlab-runner/config.toml
+
+CONFIGURATION:
+
+concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "docker"
+  url = "https://yourwebsite.com/"
+  token = "G-gz9k7xeT3KjWt4vZKi"
+  executor = "docker"
+  environment = ["DOCKER_TLS_CERTDIR=", "DOCKER_DRIVER=overlay"]
+  [runners.custom_build_dir]
+  [runners.docker]
+    tls_verify = false
+    image = "ruby:2.6"
+    privileged = true
+    disable_entrypoint_overwrite = false
+    oom_kill_disable = false
+    disable_cache = false
+    volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+    shm_size = 0
+  [runners.cache]
+    [runners.cache.s3]
+    [runners.cache.gcs]
