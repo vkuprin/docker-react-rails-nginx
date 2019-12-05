@@ -1,0 +1,42 @@
+version: '3'
+volumes:
+  ssl_data:
+  postgres_data: {}
+  certs:
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web_server:
+    build:
+      context: .
+      dockerfile: ./docker/web_server/Dockerfile
+    restart: on-failure
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - web_client
+    depends_on:
+      - web_client
+    volumes:
+      - ssl_data:/etc/resty-auto-ssl
+ 
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    ports:
+      - 5000:5000
+
+  web_client:
+    build:
+      context: .
+      dockerfile: ./docker/web_client/Dockerfile
+    ports:
+      - 3000:3000
+
